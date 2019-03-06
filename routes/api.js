@@ -21,17 +21,24 @@ module.exports = function (app) {
       if (input !== '') {
         var initNum = convertHandler.getNum(input);
         var initUnit = convertHandler.getUnit(input);
-        if ((initNum == 'Invalid number') && (initUnit == 'Invalid unit')) {
-            res.status(200).json("Invalid number and unit");
-          } else if (initNum == 'Invalid number') {
-            res.status(200).json("Invalid number");          
-          } else if (initUnit == 'Invalid unit') {
-            res.status(200).json("Invalid unit");
-          } else {          
+        if ((initNum == 'invalid number') && (initUnit == 'invalid unit')) {
+            res.status(200).send("invalid number and unit");
+          } else if (initNum == 'invalid number') {
+            res.status(200).send("invalid number");          
+          } else if (initUnit == 'invalid unit') {
+            res.status(200).send("invalid unit");
+          } else {   
+            
             var returnNum = convertHandler.convert(initNum, initUnit);
             var returnUnit = convertHandler.getReturnUnit(initUnit);
             var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
-            initNum = Number(initNum.toFixed(5));
+            if (initUnit==='l') {
+              initUnit='L';
+            }
+            if (returnUnit === 'l') {
+              returnUnit='L';
+            }
+           // initNum = Number(initNum.toFixed(5));
             returnNum = Number(returnNum.toFixed(5));
             res.status(200).json({initNum, initUnit, returnNum, returnUnit, "string": toString});
           }      

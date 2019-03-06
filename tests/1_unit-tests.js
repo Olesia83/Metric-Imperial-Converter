@@ -36,21 +36,21 @@ suite('Unit Tests', function(){
     
     test('Fractional Input w/ Decimal', function(done) {
       var input = '32/8.2L';
-      assert.approximately(convertHandler.getNum(input), 3.9, 0.1);
+      assert.equal(convertHandler.getNum(input), 3.9024390243902443);
       done();
     });
     
     test('Invalid Input (double fraction)', function(done) {
       var input = '32.2/2.1/4gal';
       var regex = /\/\d?\.?\d?\/+/;
-      assert.notMatch(convertHandler.getNum(input), regex);
+      assert.equal(convertHandler.getNum(input), 'invalid number');
       done();
     });
     
     test('No Numerical Input', function(done) {
       var input = 'gal'
       var regex = /^\d+/;
-      assert.match(convertHandler.getNum(input), regex);
+      assert.equal(convertHandler.getNum(input), 1);
       done();
     }); 
         
@@ -62,8 +62,9 @@ suite('Unit Tests', function(){
       var arr = ['gal','l','mi','km','lbs','kg','GAL','L','MI','KM','LBS','KG'];
       var input = '1';
       arr.forEach(function(ele) {
-         input='1' +ele;
-         assert.include(arr, convertHandler.getUnit(input))
+        var val=ele.toLowerCase();
+         input='1' + val;
+         assert.equal(convertHandler.getUnit(input), val)
       });
       done();
     });
@@ -73,7 +74,7 @@ suite('Unit Tests', function(){
       var arr = ['gal','l','mi','km','lbs','kg','GAL','L','MI','KM','LBS','KG'];
       arr.forEach(function(ele) {
         var input = 'h'+ele;
-        assert.notInclude(arr, convertHandler.getUnit(input));
+        assert.equal(convertHandler.getUnit(input), 'invalid unit');
       });
       done();
     });  

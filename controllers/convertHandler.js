@@ -19,7 +19,7 @@ function ConvertHandler() {
         }
         result=eval(result);        
         return result;
-    } else return 'Invalid number';
+    } else return 'invalid number';
   };
   
   this.getUnit = function(input) {
@@ -30,7 +30,7 @@ function ConvertHandler() {
       if (units.includes(result)) {
         return result.toLowerCase();
       } else {
-        return 'Invalid unit';
+        return 'invalid unit';
       } 
   };
   
@@ -81,6 +81,7 @@ function ConvertHandler() {
     var result;
     var unitIn = this.spellOutUnit(initUnit);
     var unitOut = this.spellOutUnit(returnUnit);
+    //initNum = initNum.toFixed(5);
     returnNum = returnNum.toFixed(5);
     result = (initNum + ' ' + unitIn + ' converts to '+ returnNum +' ' +unitOut).toString();
     
